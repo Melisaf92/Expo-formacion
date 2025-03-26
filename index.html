@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expo Formación: Sector construcciones</title>
+  <style>
+    /* Estilos generales */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #d8f5f9; /* Pale blue */
+    }
+    /* Header */
+    header {
+      background-color: #124565; /* Dark blue */
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer; /* Clic para volver al Inicio */
+    }
+    header img {
+      width: 60px;
+      height: auto;
+      margin-right: 10px;
+    }
+    /* Menú de navegación */
+    nav {
+      background-color: #25848d;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 10px;
+    }
+    nav a {
+      color: white;
+      padding: 15px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      margin: 5px;
+      border-radius: 5px;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+    nav a:hover {
+      background-color: #94bfc8;
+    }
+    /* Contenido Principal */
+    .main-content {
+      margin: 20px;
+    }
+    /* Secciones */
+    .section {
+      display: none;
+      background-color: #ecfbfb; /* Fondo uniforme para secciones */
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .section.activa {
+      display: block;
+    }
+    .section h2 {
+      color: #124565;
+    }
+    .section p, .section li {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #1c3444;
+    }
+    /* Botón Volver al Inicio */
+    .btn-volver {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #56bcb8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-volver:hover {
+      background-color: #68caca;
+    }
+    /* Sección Charlas (Tabla estilo calendario) */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #b4bcc6;
+      text-align: center;
+    }
+    th {
+      background-color: #1c3444;
+      color: white;
+    }
+    /* Sección Empresas (Grid) */
+    .empresas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      justify-items: center;
+    }
+    .empresa-card {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      border: 2px solid #94bfc8;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+    .empresa-card:hover {
+      transform: scale(1.05);
+    }
+    .empresa-card img {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+    /* Popup para Preinscripción */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    .popup-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      text-align: left;
+      position: relative;
+      border: 2px solid #e2c048;
+    }
+    .popup-content input,
+    .popup-content select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .popup-content button {
+      background-color: #56bcb8;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .popup-content button:hover {
+      background-color: #68caca;
+    }
+    .close-popup {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #124565;
+    }
+    /* Footer */
+    footer {
+      background-color: #124565;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 12px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+    footer a {
+      color: white;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav a {
+        font-size: 16px;
+        padding: 10px 15px;
+      }
+      header img {
+        width: 50px;
+      }
+      .section {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Encabezado con logo (clic para volver al Inicio) -->
+<header onclick="mostrarSeccion('inicio')">
+  <img src="logo_expo.png" alt="Logo Expo Formación">
+  <h1>Expo Formación</h1>
+</header>
+
+<!-- Menú de navegación -->
+<nav>
+  <a onclick="mostrarSeccion('inicio')">Inicio</a>
+  <a onclick="mostrarSeccion('charlas')">Charlas</a>
+  <a onclick="mostrarSeccion('empresas')">Empresas Participantes</a>
+  <a onclick="mostrarSeccion('inscripcion')">Inscripción</a>
+  <a onclick="mostrarSeccion('muestras')">Muestras Abiertas</a>
+</nav>
+
+<!-- Contenido Principal -->
+<div class="main-content">
+  <!-- Sección Inicio: Historia, resumen y preinscripción fija -->
+  <section id="inicio" class="section activa">
+    <h2>Bienvenido a Expo Formación</h2>
+    <p>
+      La Expo Formación surgió de la iniciativa de unir a empresas líderes y trabajadores en el sector para crear un espacio de diálogo, innovación y capacitación. 
+      Inspirados por la necesidad de transformar el mercado laboral y promover el intercambio de conocimientos, nuestros organizadores decidieron crear este evento 
+      que conecta ideas y oportunidades, fomentando el crecimiento profesional y empresarial.
+    </p>
+    <p>
+      En esta exposición, encontrarás charlas de expertos, stands de empresas reconocidas y oportunidades de inscripción que te permitirán estar a la vanguardia 
+      de las tendencias en cada industria.
+    </p>
+    <h3>¿Qué encontrarás?</h3>
+    <ul>
+      <li><strong>Charlas:</strong> Programación en formato calendario, con horarios, aula, inscriptos y estado dinámico según la hora.</li>
+      <li><strong>Empresas Participantes:</strong> Información de empresas organizadas por categorías (Construcción, Sanitarias, Gas, Electricidad, Informática).</li>
+      <li><strong>Inscripción:</strong> Acceso a la plataforma y descarga de la oferta del cuatrimestre.</li>
+      <li><strong>Muestras Abiertas:</strong> Ubicación y stands de las empresas participantes.</li>
+    </ul>
+    <p>Si deseas inscribirte, hacé clic en el botón:</p>
+    <button onclick="openPopup()">Inscribirme Ahora</button>
+  </section>
+
+  <!-- Sección Charlas (Formato de tabla y estado dinámico) -->
+  <section id="charlas" class="section">
+    <h2>Programación de Charlas</h2>
+    <p id="estadoCharlas" style="font-weight:bold; color:#124565;"></p>
+    <table>
+      <thead>
+        <tr style="background-color:#1c3444; color:white;">
+          <th>Hora</th>
+          <th>Charla</th>
+          <th>Empresa</th>
+          <th>Aula</th>
+          <th>Inscriptos</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>10:00</td>
+          <td>Nuevas tecnologías en la construcción</td>
+          <td>Constructora Sur</td>
+          <td>1 - 101</td>
+          <td><span id="charla1-inscriptos">0</span></td>
+          <td><button onclick="inscribirse('charla1')">Inscribirse</button></td>
+        </tr>
+        <tr>
+          <td>11:30</td>
+          <td>Instalación de redes sanitarias seguras</td>
+          <td>Agua Clara</td>
+          <td>2 - 204</td>
+          <td><span id="charla2-inscriptos">0</span></td>
+          <td><button onclick="inscribirse('charla2')">Inscribirse</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn-volver" onclick="mostrarSeccion('inicio')">Volver al Inicio</button>
+  </section>
+
+  <!-- Sección Empresas Participantes -->
+  <section id="empresas" class="section">
+    <h2>Empresas Participantes</h2>
+    <p>Seleccioná una categoría para explorar las empresas:</p>
+    <button onclick="mostrarEmpresas('construccion')">Construcción</button>
+    <button onclick="mostrarEmpresas('sanitarias')">Sanitarias</button>
+    <button onclick="mostrarEmpresas('gas')">Gas</button>
+    <button onclick="mostrarEmpresas('electricidad')">Electricidad</button>
+    <button onclick="mostrarEmpresas('informatica')">Informática</button>
+    <div id="empresas-lista" class="empresas-grid">
+      <!-- Las empresas se cargarán dinámicamente -->
+    </div>
+    <button class="btn-volver" onclick="mostrarSeccion('inicio')">Volver al Inicio</button>
+  </section>
+
+  <!-- Sección Inscripción -->
+  <section id="inscripcion" class="section">
+    <h2>Inscripción</h2>
+    <p>Regístrate en la plataforma o recupera tu contraseña.</p>
+    <p>
+      <a href="https://tuweb.com/registro" target="_blank">Ir a la plataforma de inscripción</a>
+    </p>
+    <p>
+      <a href="oferta_cuatrimestre.pdf" download>Descargar Oferta del Cuatrimestre (PDF)</a>
+    </p>
+    <button class="btn-volver" onclick="mostrarSeccion('inicio')">Volver al Inicio</button>
+  </section>
+
+  <!-- Sección Muestras Abiertas -->
+  <section id="muestras" class="section">
+    <h2>Muestras Abiertas</h2>
+    <p>Consulta los stands y ubicaciones de las empresas participantes.</p>
+    <ul>
+      <li><strong>Stand 1:</strong> Empresa A - Piso 1, Hall principal</li>
+      <li><strong>Stand 2:</strong> Empresa B - Piso 2, Pasillo central</li>
+      <li><strong>Stand 3:</strong> Empresa C - Piso 3, Aula 301</li>
+      <li><strong>Stand 4:</strong> Empresa D - Piso 1, Patio Exterior</li>
+    </ul>
+    <button class="btn-volver" onclick="mostrarSeccion('inicio')">Volver al Inicio</button>
+  </section>
+</div>
+
+<!-- Popup para Preinscripción -->
+<div id="preinscripcion-popup" class="popup">
+  <div class="popup-content">
+    <span class="close-popup" onclick="closePopup()">&times;</span>
+    <h3>Formulario de Preinscripción</h3>
+    <form onsubmit="guardarInscripcion(event)">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" required>
+      <label for="apellido">Apellido:</label>
+      <input type="text" id="apellido" required>
+      <label for="dni">DNI:</label>
+      <input type="text" id="dni" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+      <label for="celular">Celular (Opcional):</label>
+      <input type="text" id="celular">
+      <label for="charla">Selecciona la charla:</label>
+      <select id="charla" required>
+        <option value="charla1">Charla 1 - Nuevas tecnologías en la construcción</option>
+        <option value="charla2">Charla 2 - Redes sanitarias seguras</option>
+      </select>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+</div>
+
+<!-- Pie de Página con Redes Sociales -->
+<footer>
+  <p>&copy; 2025 Expo Formación | 
+    <a href="https://www.facebook.com/CFP3UOCRA?locale=es_LA" target="_blank">Facebook</a> | 
+    <a href="https://www.instagram.com/cific_3?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram</a> | 
+    <a href="https://wa.me/123456789" target="_blank">WhatsApp</a>
+  </p>
+</footer>
+
+<!-- Script -->
+<script>
+  // Función para mostrar una sección y ocultar las demás
+  function mostrarSeccion(id) {
+    document.querySelectorAll('.section').forEach(seccion => {
+      seccion.classList.remove('activa');
+    });
+    const seccion = document.getElementById(id);
+    if (seccion) {
+      seccion.classList.add('activa');
+      // Si es la sección de charlas, actualizar contadores y estado
+      if (id === 'charlas') {
+        actualizarContadores();
+        actualizarEstadoCharlas();
+      }
+    }
+  }
+
+  // Actualizar contadores de inscriptos en charlas
+  function actualizarContadores() {
+    ['charla1', 'charla2'].forEach(charla => {
+      const span = document.getElementById(charla + '-inscriptos');
+      if (span) {
+        span.innerText = localStorage.getItem(charla) || 0;
+      }
+    });
+  }
+
+  // Actualizar estado de las charlas según la hora actual
+  function actualizarEstadoCharlas() {
+    var ahora = new Date();
+    var hora = ahora.getHours();
+    var minuto = ahora.getMinutes();
+    var mensaje = "";
+    // Ejemplo de horarios:
+    // Charla 1: 10:00 - 11:30
+    // Charla 2: 11:30 - 13:00
+    if (hora < 10) {
+      mensaje = "Las charlas aún no han comenzado.";
+    } else if (hora < 11 || (hora === 11 && minuto < 30)) {
+      mensaje = "La charla 'Nuevas tecnologías en la construcción' está en curso o por empezar.";
+    } else if (hora < 13) {
+      mensaje = "La charla 'Instalación de redes sanitarias seguras' está en curso o por empezar.";
+    } else {
+      mensaje = "Las charlas han finalizado por hoy.";
+    }
+    document.getElementById("estadoCharlas").innerText = mensaje;
+  }
+
+  // Función para inscribirse en una charla desde la sección de charlas
+  function inscribirse(charla) {
+    let inscriptos = parseInt(localStorage.getItem(charla)) || 0;
+    inscriptos++;
+    localStorage.setItem(charla, inscriptos);
+    document.getElementById(charla + '-inscriptos').innerText = inscriptos;
+    alert('Te has inscrito a ' + charla + '. ¡Gracias!');
+    actualizarEstadoCharlas();
+  }
+
+  // Funciones para el popup del formulario de Preinscripción
+  function openPopup() {
+    document.getElementById("preinscripcion-popup").style.display = "flex";
+  }
+  function closePopup() {
+    document.getElementById("preinscripcion-popup").style.display = "none";
+  }
+  function guardarInscripcion(event) {
+    event.preventDefault();
+    const charla = document.getElementById("charla").value;
+    let inscriptos = parseInt(localStorage.getItem(charla)) || 0;
+    inscriptos++;
+    localStorage.setItem(charla, inscriptos);
+    const span = document.getElementById(charla + '-inscriptos');
+    if (span) {
+      span.innerText = inscriptos;
+    }
+    alert('Inscripción exitosa a ' + charla + '!');
+    closePopup();
+    actualizarEstadoCharlas();
+  }
+
+  // Función para mostrar empresas por categoría
+  function mostrarEmpresas(categoria) {
+    const empresas = {
+      construccion: [
+        { nombre: 'Empresa A', logo: 'https://via.placeholder.com/150', descripcion: 'Obras civiles.' },
+        { nombre: 'Empresa B', logo: 'https://via.placeholder.com/150', descripcion: 'Edificios residenciales.' }
+      ],
+      sanitarias: [
+        { nombre: 'Empresa C', logo: 'https://via.placeholder.com/150', descripcion: 'Sistemas sanitarios.' },
+        { nombre: 'Empresa D', logo: 'https://via.placeholder.com/150', descripcion: 'Instalación de agua y gas.' }
+      ],
+      gas: [
+        { nombre: 'Empresa E', logo: 'https://via.placeholder.com/150', descripcion: 'Instalación de gas.' }
+      ],
+      electricidad: [
+        { nombre: 'Empresa F', logo: 'https://via.placeholder.com/150', descripcion: 'Soluciones eléctricas.' }
+      ],
+      informatica: [
+        { nombre: 'Empresa G', logo: 'https://via.placeholder.com/150', descripcion: 'Soporte informático.' }
+      ]
+    };
+    const contenedor = document.getElementById("empresas-lista");
+    contenedor.innerHTML = "";
+    (empresas[categoria] || []).forEach(empresa => {
+      const card = document.createElement('div');
+      card.className = 'empresa-card';
+      card.innerHTML = `
+        <img src="${empresa.logo}" alt="Logo de ${empresa.nombre}" class="empresa-logo" />
+        <p><strong>${empresa.nombre}</strong></p>
+        <p>${empresa.descripcion}</p>
+      `;
+      contenedor.appendChild(card);
+    });
+  }
+
+  // Al cargar la página, mostrar la sección Inicio
+  window.onload = function() {
+    mostrarSeccion('inicio');
+  };
+</script>
+</body>
+</html>

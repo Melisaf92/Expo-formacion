@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f3fafa;
+    background-image: url('fondo_uocra.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    scroll-behavior: smooth; /* Habilitar desplazamiento suave */
+  }
+  
+  header {
+    background-color: rgba(33, 116, 131, 0.8);
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  header .logo {
+    width: 80px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  header nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  header nav ul li {
+    display: inline;
+    margin-right: 20px;
+  }
+  
+  header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  header nav ul li a:hover {
+    color: #68caca; /* Color cuando pasa el ratón sobre los enlaces */
+  }
+  
+  section {
+    padding: 20px;
+    margin: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1, h2 {
+    color: #217483;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #68caca;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #94bfc8;
+  }
+  
+  .empresa {
+    display: inline-block;
+    margin-right: 10px;
+    text-align: center;
+  }
+  
+  .empresa img {
+    width: 100px;
+    height: 100px;
+  }
+  
+  form input {
+    padding: 8px;
+    margin: 10px 0;
+    width: 100%;
+    border: 1px solid #c0e3eb;
+    border-radius: 5px;
+  }
+  
+  form button {
+    background-color: #e2c048;
+    border: none;
+  }
+  
+  form button:hover {
+    background-color: #eadd9c;
+  }
+  
+  #preinscriptos {
+    background-color: #c0e3eb;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  #preinscriptos ul {
+    padding-left: 20px;
+  }
+  
+  #preinscriptos li {
+    margin: 5px 0;
+    color: #798896;
+  }
+  
